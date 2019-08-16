@@ -1,0 +1,29 @@
+apply from: 'aws-credentials.gradle'
+
+repositories {
+    mavenLocal()
+    jcenter()
+    repositories {
+        maven {
+            url 's3://repository.boldadmin.com/snapshots'
+            credentials(AwsCredentials) {
+                accessKey awsCredentials.AWSAccessKeyId
+                secretKey awsCredentials.AWSSecretKey
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation "lt.boldadmin.nexus:nexus-api:$gradle.ext.version"
+
+    implementation "com.google.maps:google-maps-services:0.9.4"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$detekt_version"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.0"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.0"
+    testImplementation "io.mockk:mockk:1.9.3"
+}
