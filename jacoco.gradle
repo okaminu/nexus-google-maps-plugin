@@ -3,7 +3,7 @@ jacoco {
     toolVersion = "0.8.4"
 }
 
-def fileFilter = ['**/*$*$*.*', '**/ReverseGeocoder.*', '**/ApiContextFactoryKt.*']
+def fileFilter = ['**/*$*$*.*', '**/ReverseGeocoder.*', '**/ApiContextFactoryKt.*', '**/TimeZoneConverter.*']
 def debugTree = fileTree(dir: "${buildDir}/classes/kotlin/main", excludes: fileFilter)
 
 jacocoTestReport {
