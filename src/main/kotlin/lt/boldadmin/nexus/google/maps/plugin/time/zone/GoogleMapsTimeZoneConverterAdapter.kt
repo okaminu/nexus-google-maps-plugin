@@ -11,6 +11,7 @@ open class GoogleMapsTimeZoneConverterAdapter(private val timeZoneConverter: Tim
 
     override fun convert(coordinates: Coordinates): ZoneId =
         try {
+            println("GAUNA timezone")
             timeZoneConverter.convert(coordinates).toZoneId()
         } catch (e: ApiException) {
             throw TimeZoneConverterGatewayException("Api exception: ${e.message}")
