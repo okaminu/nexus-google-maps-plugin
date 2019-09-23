@@ -1,4 +1,4 @@
-package lt.boldadmin.nexus.google.maps.plugin.geocode
+package lt.boldadmin.nexus.plugin.google.maps.geocode
 
 import com.google.maps.errors.ApiException
 import com.google.openlocationcode.OpenLocationCode

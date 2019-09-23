@@ -1,4 +1,4 @@
-package lt.boldadmin.nexus.google.maps.plugin.test.unit.geocode
+package lt.boldadmin.nexus.plugin.google.maps.test.unit.geocode
 
 import com.google.maps.errors.ApiException
 import com.google.maps.model.GeocodingResult
@@ -8,8 +8,8 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import lt.boldadmin.nexus.api.exception.LocationNotFoundException
 import lt.boldadmin.nexus.api.exception.ReverseGeocodeConverterException
-import lt.boldadmin.nexus.google.maps.plugin.geocode.GoogleMapsGeocodeConverterAdapter
-import lt.boldadmin.nexus.google.maps.plugin.geocode.ReverseGeocoder
+import lt.boldadmin.nexus.plugin.google.maps.geocode.GoogleMapsGeocodeConverterAdapter
+import lt.boldadmin.nexus.plugin.google.maps.geocode.ReverseGeocoder
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

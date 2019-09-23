@@ -1,4 +1,4 @@
-package lt.boldadmin.nexus.google.maps.plugin.test.unit.time.zone
+package lt.boldadmin.nexus.plugin.google.maps.test.unit.time.zone
 
 import com.google.maps.errors.ApiException
 import io.mockk.every
@@ -6,8 +6,8 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import lt.boldadmin.nexus.api.exception.TimeZoneConverterGatewayException
 import lt.boldadmin.nexus.api.type.valueobject.Coordinates
-import lt.boldadmin.nexus.google.maps.plugin.time.zone.GoogleMapsTimeZoneConverterAdapter
-import lt.boldadmin.nexus.google.maps.plugin.time.zone.TimeZoneConverter
+import lt.boldadmin.nexus.plugin.google.maps.time.zone.GoogleMapsTimeZoneConverterAdapter
+import lt.boldadmin.nexus.plugin.google.maps.time.zone.TimeZoneConverter
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

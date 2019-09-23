@@ -1,4 +1,4 @@
-package lt.boldadmin.nexus.google.maps.plugin
+package lt.boldadmin.nexus.plugin.google.maps
 
 import com.google.maps.GeoApiContext
 
