@@ -4,7 +4,7 @@ import com.google.maps.errors.ApiException
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import lt.boldadmin.nexus.api.exception.TimeZoneConverterGatewayException
+import lt.boldadmin.nexus.api.exception.TimeZoneConverterException
 import lt.boldadmin.nexus.api.type.valueobject.Coordinates
 import lt.boldadmin.nexus.plugin.google.maps.time.zone.GoogleMapsTimeZoneConverterAdapter
 import lt.boldadmin.nexus.plugin.google.maps.time.zone.TimeZoneConverter
@@ -42,7 +42,7 @@ class GoogleMapsTimeZoneConverterAdapterTest {
      fun `Throws exception on ApiException`() {
          every { converterStub.convert(COORDINATES) } throws ApiException.from("NOT_FOUND", "error")
 
-         val exception = assertThrows(TimeZoneConverterGatewayException::class.java) {
+         val exception = assertThrows(TimeZoneConverterException::class.java) {
              adapter.convert(COORDINATES)
          }
 
