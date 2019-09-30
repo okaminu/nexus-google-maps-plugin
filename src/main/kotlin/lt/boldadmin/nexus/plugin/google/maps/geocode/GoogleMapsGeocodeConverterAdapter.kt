@@ -5,28 +5,28 @@ import com.google.openlocationcode.OpenLocationCode
 import lt.boldadmin.nexus.api.ReverseGeocodeConverter
 import lt.boldadmin.nexus.api.exception.LocationNotFoundException
 import lt.boldadmin.nexus.api.exception.ReverseGeocodeConverterException
+import lt.boldadmin.nexus.api.type.valueobject.Coordinates
 
 open class GoogleMapsGeocodeConverterAdapter(private val reverseGeocoder: ReverseGeocoder): ReverseGeocodeConverter {
 
-    override fun convertToAddress(latitude: Double, longitude: Double): String {
+    override fun convertToAddress(coordinates: Coordinates) =
         try {
-            return convert(latitude, longitude)
+            convert(coordinates)
         } catch (e: ApiException) {
             throw ReverseGeocodeConverterException("Api exception: ${e.message}")
         } catch (e: IllegalStateException) {
             throw ReverseGeocodeConverterException("Illegal state exception: ${e.message}")
         }
-    }
 
-    override fun convertToPlusCode(latitude: Double, longitude: Double): String =
-        OpenLocationCode(latitude, longitude).code
+    override fun convertToPlusCode(coordinates: Coordinates): String =
+        OpenLocationCode(coordinates.latitude, coordinates.longitude).code
 
-    private fun convert(latitude: Double, longitude: Double): String {
-        val results = reverseGeocoder.geocode(latitude, longitude)
+    private fun convert(coordinates: Coordinates): String {
+        val results = reverseGeocoder.geocode(coordinates)
 
         if (results.isEmpty())
             throw LocationNotFoundException(
-                "Location not found by coordinates: $latitude $longitude"
+                "Location not found by coordinates: ${coordinates.latitude} ${coordinates.longitude}"
             )
         return results.first().formattedAddress
     }

@@ -8,6 +8,7 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import lt.boldadmin.nexus.api.exception.LocationNotFoundException
 import lt.boldadmin.nexus.api.exception.ReverseGeocodeConverterException
+import lt.boldadmin.nexus.api.type.valueobject.Coordinates
 import lt.boldadmin.nexus.plugin.google.maps.geocode.GoogleMapsGeocodeConverterAdapter
 import lt.boldadmin.nexus.plugin.google.maps.geocode.ReverseGeocoder
 import org.junit.jupiter.api.Assertions.*
@@ -31,40 +32,34 @@ class GoogleMapsGeocodeConverterAdapterTest {
     @Test
     fun `Converts coordinates to address`() {
         val expectedAddress = "address"
-        val latitude = 15.0
-        val longitude = 16.0
-        every { reverseGeocoderStub.geocode(latitude, longitude) } returns
+        every { reverseGeocoderStub.geocode(COORDINATES) } returns
             arrayOf(GeocodingResult().apply { formattedAddress = expectedAddress })
 
-        val actualAddress = adapter.convertToAddress(latitude, longitude)
+        val actualAddress = adapter.convertToAddress(COORDINATES)
 
         assertEquals(expectedAddress, actualAddress)
     }
 
     @Test
     fun `Throws exception when location is not found`() {
-        val latitude = 15.0
-        val longitude = 16.0
-        every { reverseGeocoderStub.geocode(latitude, longitude) } returns emptyArray()
+        every { reverseGeocoderStub.geocode(COORDINATES) } returns emptyArray()
 
         val exception = assertThrows(LocationNotFoundException::class.java) {
-            adapter.convertToAddress(latitude, longitude)
+            adapter.convertToAddress(COORDINATES)
         }
 
-        assertTrue(exception.message!!.contains(latitude.toString()))
-        assertTrue(exception.message!!.contains(longitude.toString()))
+        assertTrue(exception.message!!.contains(COORDINATES.latitude.toString()))
+        assertTrue(exception.message!!.contains(COORDINATES.longitude.toString()))
     }
 
     @Test
     fun `Throws exception on ApiException`() {
-        val latitude = 15.0
-        val longitude = 16.0
         val exceptionStub: ApiException = mockk()
         every { exceptionStub.message } returns "exception"
-        every { reverseGeocoderStub.geocode(latitude, longitude) } throws exceptionStub
+        every { reverseGeocoderStub.geocode(COORDINATES) } throws exceptionStub
 
         val exception = assertThrows(ReverseGeocodeConverterException::class.java) {
-            adapter.convertToAddress(latitude, longitude)
+            adapter.convertToAddress(COORDINATES)
         }
 
         assertTrue(exception.message!!.contains(exceptionStub.message!!))
@@ -72,14 +67,12 @@ class GoogleMapsGeocodeConverterAdapterTest {
 
     @Test
     fun `Throws exception on IllegalStateException`() {
-        val latitude = 15.0
-        val longitude = 16.0
         val exceptionStub: IllegalStateException = mockk()
         every { exceptionStub.message } returns "exception"
-        every { reverseGeocoderStub.geocode(latitude, longitude) } throws exceptionStub
+        every { reverseGeocoderStub.geocode(COORDINATES) } throws exceptionStub
 
         val exception = assertThrows(ReverseGeocodeConverterException::class.java) {
-            adapter.convertToAddress(latitude, longitude)
+            adapter.convertToAddress(COORDINATES)
         }
 
         assertTrue(exception.message!!.contains(exceptionStub.message!!))
@@ -89,9 +82,13 @@ class GoogleMapsGeocodeConverterAdapterTest {
     fun `Converts coordinates to plus code`() {
         val expectedPlusCode = "8Q7XJVGM+M5"
 
-        val actualPlusCode = adapter.convertToPlusCode(35.6267108, 139.8828839)
+        val actualPlusCode = adapter.convertToPlusCode(Coordinates(35.6267108, 139.8828839))
 
         assertEquals(expectedPlusCode, actualPlusCode)
+    }
+
+    companion object {
+        private val COORDINATES = Coordinates(15.0, 16.0)
     }
 
 }
