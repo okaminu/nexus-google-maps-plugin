@@ -8,9 +8,10 @@ import java.util.*
 
 object TimeZoneConverter {
 
-    internal fun convert(coordinates: Coordinates): TimeZone = TimeZoneApi.getTimeZone(
-        createApiContext(),
-        LatLng(coordinates.latitude, coordinates.longitude)
-    ).await()
+    internal fun convert(coordinates: Coordinates): TimeZone =
+        TimeZoneApi.getTimeZone(
+            createApiContext(),
+            LatLng(coordinates.latitude, coordinates.longitude)
+        ).await()
 
 }

@@ -7,9 +7,9 @@ import lt.boldadmin.nexus.api.exception.LocationNotFoundException
 import lt.boldadmin.nexus.api.exception.ReverseGeocodeConverterException
 import lt.boldadmin.nexus.api.type.valueobject.Coordinates
 
-open class GoogleMapsGeocodeConverterAdapter(private val reverseGeocoder: ReverseGeocoder): ReverseGeocodeConverter {
+class GoogleMapsGeocodeConverterAdapter(private val reverseGeocoder: ReverseGeocoder): ReverseGeocodeConverter {
 
-    override fun convertToAddress(coordinates: Coordinates) =
+    override fun convertToAddress(coordinates: Coordinates): String =
         try {
             convert(coordinates)
         } catch (e: ApiException) {
@@ -21,14 +21,12 @@ open class GoogleMapsGeocodeConverterAdapter(private val reverseGeocoder: Revers
     override fun convertToPlusCode(coordinates: Coordinates): String =
         OpenLocationCode(coordinates.latitude, coordinates.longitude).code
 
-    private fun convert(coordinates: Coordinates): String {
-        val results = reverseGeocoder.geocode(coordinates)
-
-        if (results.isEmpty())
-            throw LocationNotFoundException(
-                "Location not found by coordinates: ${coordinates.latitude} ${coordinates.longitude}"
-            )
-        return results.first().formattedAddress
-    }
+    private fun convert(coordinates: Coordinates) =
+        reverseGeocoder.geocode(coordinates).apply {
+            if (this.isEmpty())
+                throw LocationNotFoundException(
+                    "Location not found by coordinates: ${coordinates.latitude} ${coordinates.longitude}"
+                )
+        }.first().formattedAddress
 
 }
