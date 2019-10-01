@@ -9,24 +9,24 @@ import io.mockk.mockk
 import lt.boldadmin.nexus.api.exception.LocationNotFoundException
 import lt.boldadmin.nexus.api.exception.ReverseGeocodeConverterException
 import lt.boldadmin.nexus.api.type.valueobject.Coordinates
-import lt.boldadmin.nexus.plugin.google.maps.geocode.GoogleMapsGeocodeConverterAdapter
-import lt.boldadmin.nexus.plugin.google.maps.geocode.ReverseGeocoder
+import lt.boldadmin.nexus.plugin.google.maps.geocode.GoogleMapsReverseGeocoderAdapter
+import lt.boldadmin.nexus.plugin.google.maps.geocode.GoogleMapsReverseGeocoder
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
-class GoogleMapsGeocodeConverterAdapterTest {
+class GoogleMapsReverseGeocoderAdapterTest {
 
     @MockK
-    private lateinit var reverseGeocoderStub: ReverseGeocoder
+    private lateinit var reverseGeocoderStub: GoogleMapsReverseGeocoder
 
-    private lateinit var adapter: GoogleMapsGeocodeConverterAdapter
+    private lateinit var adapter: GoogleMapsReverseGeocoderAdapter
 
     @BeforeEach
     fun `Set up`() {
-        adapter = GoogleMapsGeocodeConverterAdapter(reverseGeocoderStub)
+        adapter = GoogleMapsReverseGeocoderAdapter(reverseGeocoderStub)
     }
 
     @Test
@@ -35,7 +35,7 @@ class GoogleMapsGeocodeConverterAdapterTest {
         every { reverseGeocoderStub.geocode(COORDINATES) } returns
             arrayOf(GeocodingResult().apply { formattedAddress = expectedAddress })
 
-        val actualAddress = adapter.convertToAddress(COORDINATES)
+        val actualAddress = adapter.toAddress(COORDINATES)
 
         assertEquals(expectedAddress, actualAddress)
     }
@@ -45,7 +45,7 @@ class GoogleMapsGeocodeConverterAdapterTest {
         every { reverseGeocoderStub.geocode(COORDINATES) } returns emptyArray()
 
         val exception = assertThrows(LocationNotFoundException::class.java) {
-            adapter.convertToAddress(COORDINATES)
+            adapter.toAddress(COORDINATES)
         }
 
         assertTrue(exception.message!!.contains(COORDINATES.latitude.toString()))
@@ -59,7 +59,7 @@ class GoogleMapsGeocodeConverterAdapterTest {
         every { reverseGeocoderStub.geocode(COORDINATES) } throws exceptionStub
 
         val exception = assertThrows(ReverseGeocodeConverterException::class.java) {
-            adapter.convertToAddress(COORDINATES)
+            adapter.toAddress(COORDINATES)
         }
 
         assertTrue(exception.message!!.contains(exceptionStub.message!!))
@@ -72,7 +72,7 @@ class GoogleMapsGeocodeConverterAdapterTest {
         every { reverseGeocoderStub.geocode(COORDINATES) } throws exceptionStub
 
         val exception = assertThrows(ReverseGeocodeConverterException::class.java) {
-            adapter.convertToAddress(COORDINATES)
+            adapter.toAddress(COORDINATES)
         }
 
         assertTrue(exception.message!!.contains(exceptionStub.message!!))
@@ -82,7 +82,7 @@ class GoogleMapsGeocodeConverterAdapterTest {
     fun `Converts coordinates to plus code`() {
         val expectedPlusCode = "8Q7XJVGM+M5"
 
-        val actualPlusCode = adapter.convertToPlusCode(Coordinates(35.6267108, 139.8828839))
+        val actualPlusCode = adapter.toPlusCode(Coordinates(35.6267108, 139.8828839))
 
         assertEquals(expectedPlusCode, actualPlusCode)
     }
