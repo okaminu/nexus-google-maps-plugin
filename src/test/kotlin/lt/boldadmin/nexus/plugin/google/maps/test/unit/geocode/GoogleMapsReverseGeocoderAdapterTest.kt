@@ -7,7 +7,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import lt.boldadmin.nexus.api.exception.LocationNotFoundException
-import lt.boldadmin.nexus.api.exception.GeocoderException
+import lt.boldadmin.nexus.api.exception.ReverseGeocoderException
 import lt.boldadmin.nexus.api.type.valueobject.Coordinates
 import lt.boldadmin.nexus.plugin.google.maps.geocode.GoogleMapsReverseGeocoder
 import lt.boldadmin.nexus.plugin.google.maps.geocode.GoogleMapsReverseGeocoderAdapter
@@ -58,7 +58,7 @@ class GoogleMapsReverseGeocoderAdapterTest {
         every { exceptionStub.message } returns "exception"
         every { reverseGeocoderStub.geocode(COORDINATES) } throws exceptionStub
 
-        val exception = assertThrows(GeocoderException::class.java) {
+        val exception = assertThrows(ReverseGeocoderException::class.java) {
             adapter.toAddress(COORDINATES)
         }
 
@@ -71,7 +71,7 @@ class GoogleMapsReverseGeocoderAdapterTest {
         every { exceptionStub.message } returns "exception"
         every { reverseGeocoderStub.geocode(COORDINATES) } throws exceptionStub
 
-        val exception = assertThrows(GeocoderException::class.java) {
+        val exception = assertThrows(ReverseGeocoderException::class.java) {
             adapter.toAddress(COORDINATES)
         }
 
