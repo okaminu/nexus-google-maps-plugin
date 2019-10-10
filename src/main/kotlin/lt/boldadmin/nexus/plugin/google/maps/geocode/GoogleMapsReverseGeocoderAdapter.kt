@@ -2,7 +2,7 @@ package lt.boldadmin.nexus.plugin.google.maps.geocode
 
 import com.google.maps.errors.ApiException
 import com.google.openlocationcode.OpenLocationCode
-import lt.boldadmin.nexus.api.exception.LocationNotFoundException
+import lt.boldadmin.nexus.api.exception.CoordinatesNotFoundException
 import lt.boldadmin.nexus.api.exception.ReverseGeocoderException
 import lt.boldadmin.nexus.api.gateway.ReverseGeocoder
 import lt.boldadmin.nexus.api.type.valueobject.Coordinates
@@ -24,7 +24,7 @@ open class GoogleMapsReverseGeocoderAdapter(private val reverseGeocoder: GoogleM
     private fun toAddressWithoutExceptionHandling(coordinates: Coordinates) =
         reverseGeocoder.geocode(coordinates).apply {
             if (this.isEmpty())
-                throw LocationNotFoundException(
+                throw CoordinatesNotFoundException(
                     "Location not found by coordinates: ${coordinates.latitude} ${coordinates.longitude}"
                 )
         }.first().formattedAddress
