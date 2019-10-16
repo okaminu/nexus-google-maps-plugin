@@ -6,8 +6,8 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import lt.boldadmin.nexus.api.exception.TimeZoneConverterException
 import lt.boldadmin.nexus.api.type.valueobject.Coordinates
-import lt.boldadmin.nexus.plugin.google.maps.time.zone.GoogleMapsTimeZoneConverter
-import lt.boldadmin.nexus.plugin.google.maps.time.zone.GoogleMapsTimeZoneConverterAdapter
+import lt.boldadmin.nexus.plugin.google.maps.timezone.GoogleMapsTimeZoneConverter
+import lt.boldadmin.nexus.plugin.google.maps.timezone.GoogleMapsTimeZoneAdapter
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -16,16 +16,16 @@ import java.time.ZoneId
 import java.util.*
 
 @ExtendWith(MockKExtension::class)
-class GoogleMapsTimeZoneConverterAdapterTest {
+class GoogleMapsTimeZoneAdapterTest {
 
     @MockK
     private lateinit var converterStub: GoogleMapsTimeZoneConverter
 
-    private lateinit var adapter: GoogleMapsTimeZoneConverterAdapter
+    private lateinit var adapter: GoogleMapsTimeZoneAdapter
 
     @BeforeEach
     fun `Set up`() {
-        adapter = GoogleMapsTimeZoneConverterAdapter(converterStub)
+        adapter = GoogleMapsTimeZoneAdapter(converterStub)
     }
 
     @Test

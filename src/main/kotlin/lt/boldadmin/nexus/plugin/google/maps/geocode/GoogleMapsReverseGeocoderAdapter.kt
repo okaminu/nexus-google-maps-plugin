@@ -21,12 +21,14 @@ open class GoogleMapsReverseGeocoderAdapter(private val reverseGeocoder: GoogleM
     override fun toPlusCode(coordinates: Coordinates): String =
         OpenLocationCode(coordinates.latitude, coordinates.longitude).code
 
-    private fun toAddressWithoutExceptionHandling(coordinates: Coordinates) =
-        reverseGeocoder.geocode(coordinates).apply {
-            if (this.isEmpty())
-                throw CoordinatesNotFoundException(
-                    "Location not found by coordinates: ${coordinates.latitude} ${coordinates.longitude}"
-                )
-        }.first().formattedAddress
+    private fun toAddressWithoutExceptionHandling(coordinates: Coordinates): String {
+        val results = reverseGeocoder.geocode(coordinates)
+
+        if (results.isEmpty())
+            throw CoordinatesNotFoundException(
+                "Location not found by coordinates: ${coordinates.latitude} ${coordinates.longitude}"
+            )
+        return results.first().formattedAddress
+    }
 
 }

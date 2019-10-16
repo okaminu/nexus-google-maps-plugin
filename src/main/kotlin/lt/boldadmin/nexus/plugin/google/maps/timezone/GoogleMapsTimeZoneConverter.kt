@@ -1,4 +1,4 @@
-package lt.boldadmin.nexus.plugin.google.maps.time.zone
+package lt.boldadmin.nexus.plugin.google.maps.timezone
 
 import com.google.maps.TimeZoneApi
 import com.google.maps.model.LatLng
