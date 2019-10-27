@@ -13,7 +13,7 @@ open class GoogleMapsTimeZoneAdapter(private val converter: GoogleMapsTimeZoneCo
         try {
             converter.convert(coordinates).toZoneId()
         } catch (e: ApiException) {
-            throw TimeZoneConverterException("Api exception: ${e.message}")
+            throw TimeZoneConverterException("Api exception: ${e.message} at coordinates: $coordinates")
         }
 
 }
