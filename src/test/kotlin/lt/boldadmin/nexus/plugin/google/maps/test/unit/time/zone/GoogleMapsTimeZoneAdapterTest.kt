@@ -47,6 +47,7 @@ class GoogleMapsTimeZoneAdapterTest {
          }
 
          assertTrue(exception.message!!.contains("error"))
+         assertTrue(exception.message!!.contains(COORDINATES.toString()))
      }
 
     companion object {
