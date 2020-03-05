@@ -5,7 +5,7 @@ import com.google.openlocationcode.OpenLocationCode
 import lt.boldadmin.nexus.api.exception.CoordinatesNotFoundException
 import lt.boldadmin.nexus.api.exception.ReverseGeocoderException
 import lt.boldadmin.nexus.api.gateway.ReverseGeocoder
-import lt.boldadmin.nexus.api.type.valueobject.Coordinates
+import lt.boldadmin.nexus.api.type.valueobject.location.Coordinates
 
 open class GoogleMapsReverseGeocoderAdapter(private val reverseGeocoder: GoogleMapsReverseGeocoder): ReverseGeocoder {
 

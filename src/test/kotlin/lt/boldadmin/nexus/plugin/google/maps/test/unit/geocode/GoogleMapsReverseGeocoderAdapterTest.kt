@@ -8,7 +8,7 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import lt.boldadmin.nexus.api.exception.CoordinatesNotFoundException
 import lt.boldadmin.nexus.api.exception.ReverseGeocoderException
-import lt.boldadmin.nexus.api.type.valueobject.Coordinates
+import lt.boldadmin.nexus.api.type.valueobject.location.Coordinates
 import lt.boldadmin.nexus.plugin.google.maps.geocode.GoogleMapsReverseGeocoder
 import lt.boldadmin.nexus.plugin.google.maps.geocode.GoogleMapsReverseGeocoderAdapter
 import org.junit.jupiter.api.Assertions.*
